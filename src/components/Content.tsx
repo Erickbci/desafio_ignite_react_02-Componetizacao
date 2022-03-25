@@ -21,10 +21,13 @@ interface MovieProps {
   }>;
   Runtime: string;
 }
+interface Content {
+  genre: number;
+}
 
-export function Content() {
-
-  const [selectedGenreId, setSelectedGenreId] = useState(1);
+export function Content(props: Content) {
+  const { genre } = props;
+  // const [selectedGenreId, setSelectedGenreId] = useState(1);
 
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
 
@@ -39,14 +42,14 @@ export function Content() {
   }, []);
 
   useEffect(() => {
-    api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
+    api.get<MovieProps[]>(`movies/?Genre_id=${genre}`).then(response => {
       setMovies(response.data);
     });
 
-    api.get<GenreResponseProps>(`genres/${selectedGenreId}`).then(response => {
+    api.get<GenreResponseProps>(`genres/${genre}`).then(response => {
       setSelectedGenre(response.data);
     })
-  }, [selectedGenreId]);
+  }, [genre]);
 
   return(
     <div className="container">

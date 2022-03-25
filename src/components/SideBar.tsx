@@ -22,8 +22,10 @@ interface MovieProps {
   Runtime: string;
 }
 
-
-export function SideBar() {
+interface Sidebar {
+  fallback: any;
+}
+export function SideBar(props: Sidebar) {
 
   const [selectedGenreId, setSelectedGenreId] = useState(1);
 
@@ -50,6 +52,7 @@ export function SideBar() {
   }, [selectedGenreId]);
 
   function handleClickButton(id: number) {
+    props.fallback(id);
     setSelectedGenreId(id);
   }
 
